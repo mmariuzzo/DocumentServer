@@ -301,6 +301,8 @@ function sendServerRequest(server, postData, onReplyCallback) {
     });
     req.on("error", function (e) {
         logger.warn("problem with request on server: %s", e.message);
+        // SMC
+        logger.warn("server is host:%s path:%s", server.host, server.path);
     });
     req.write(postData);
     req.end();
@@ -343,7 +345,12 @@ function sendStatusDocument(docId, bChangeBase) {
     }
     if (c_oAscChangeBase.No !== bChangeBase) {
         if (c_oAscServerStatus.Editing === status && c_oAscChangeBase.All === bChangeBase) {
-            sqlBase.insertInTable(sqlBase.tableId.callbacks, docId, callback.href);
+            // SMC
+            try {
+                sqlBase.insertInTable(sqlBase.tableId.callbacks, docId, callback.href);
+            } catch(e) {
+                logger.warn("warn on insert SendStatusDocument: %s docId = %s", e, docId);
+            }
         } else {
             if (c_oAscServerStatus.Closed === status) {
                 deleteCallback(docId);
