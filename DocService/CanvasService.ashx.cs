@@ -1950,8 +1950,14 @@ public class CanvasService : IHttpAsyncHandler
 			Uri oAbsUrl;
             if (!(Uri.TryCreate(sUrl, UriKind.Absolute, out oAbsUrl) && (Uri.UriSchemeHttps == oAbsUrl.Scheme || Uri.UriSchemeHttp == oAbsUrl.Scheme || Uri.UriSchemeFtp == oAbsUrl.Scheme)))
 			{
-				Uri baseUri = new Uri("http://localhost");
-                oAbsUrl = new Uri(baseUri, sUrl);
+                string vHost = ConfigurationSettings.AppSettings["editor.settings.coauthoring.vhost"];
+                if (String.isNullOrEmpty(vHost)) {
+                    Uri baseUri = new Uri("http://localhost");
+                    oAbsUrl = new Uri(baseUri, sUrl);
+                } else {
+                    Uri baseUri = new Uri(vHost);
+                    oAbsUrl = new Uri(baseUri, sUrl);
+                }
 			}
             _log.DebugFormat("RequestToCoAuthoring url:{0}", oAbsUrl.AbsoluteUri);
             oTransportClassSaveChanges.m_oAsyncWebRequestOperation = new AsyncWebRequestOperation();
