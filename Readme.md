@@ -1,3 +1,11 @@
+## INFO
+
+Inside this branch you will find some changes I've made on OnlyOffice about:    
+* have few more logging message
+* manage different installation patterns
+* have PostgreSQL ad default database
+* etc...
+ 
 ## Overview
 
 ONLYOFFICE Document Server is a free collaborative online office suite comprising viewers and editors for texts, spreadsheets and presentations, fully compatible with Office Open XML formats: .docx, .xlsx, .pptx and enabling collaborative editing in real time.
