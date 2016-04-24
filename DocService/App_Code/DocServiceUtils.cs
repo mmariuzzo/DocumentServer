@@ -41,8 +41,12 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 
+using log4net;
+
 public static class UrlBuilder
 {
+    private static readonly ILog _log = LogManager.GetLogger(typeof(UrlBuilder));
+    
     public static string UrlWithoutPath(HttpRequest oHttpRequest)
     {
         string sSiteUrl = "";
@@ -53,6 +57,10 @@ public static class UrlBuilder
             string sForwardedProtoHeader = oHttpRequest.Headers["X-Forwarded-Proto"];
 
             Uri oSiteUri = oHttpRequest.Url;
+
+            _log.DebugFormat(
+			   "oHttpRequest.Url={0} :sHostHeader={1} :sForwardedHostHeader={2} :sForwardedProtoHeader={3}", 
+			   oSiteUri.OriginalString, sHostHeader, sForwardedHostHeader, sForwardedProtoHeader);
 
             if (!String.IsNullOrEmpty(sForwardedProtoHeader))
             {
