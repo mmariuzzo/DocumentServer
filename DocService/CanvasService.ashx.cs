@@ -1951,7 +1951,7 @@ public class CanvasService : IHttpAsyncHandler
             if (!(Uri.TryCreate(sUrl, UriKind.Absolute, out oAbsUrl) && (Uri.UriSchemeHttps == oAbsUrl.Scheme || Uri.UriSchemeHttp == oAbsUrl.Scheme || Uri.UriSchemeFtp == oAbsUrl.Scheme)))
 			{
                 string vHost = ConfigurationSettings.AppSettings["editor.settings.coauthoring.vhost"];
-                if (String.isNullOrEmpty(vHost)) {
+                if (String.IsNullOrEmpty(vHost)) {
                     Uri baseUri = new Uri("http://localhost");
                     oAbsUrl = new Uri(baseUri, sUrl);
                 } else {
