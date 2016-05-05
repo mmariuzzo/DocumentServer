@@ -2,10 +2,11 @@
 
 Inside this branch you will find some changes I've made on OnlyOffice about:    
 * have few more logging message
+* increase compatibility with Linux distribution RHEL 7 and CentOS 7
 * manage different installation patterns
-* have PostgreSQL ad default database
+* increase compatibility with PostgreSQL
 * etc...
- 
+
 ## Overview
 
 ONLYOFFICE Document Server is a free collaborative online office suite comprising viewers and editors for texts, spreadsheets and presentations, fully compatible with Office Open XML formats: .docx, .xlsx, .pptx and enabling collaborative editing in real time.
