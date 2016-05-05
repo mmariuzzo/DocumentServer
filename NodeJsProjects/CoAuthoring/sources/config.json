@@ -8,7 +8,7 @@
 		"port": 8000,
 		"database": "onlyoffice"
 	},
-    "sql": {
+    "sql-mysql": {
       "type"				: "mysql",
       "tableChanges"		: "doc_changes",
       "tableCallbacks"		: "doc_callbacks",
@@ -20,6 +20,20 @@
       "user"				: "root",
       "pass"				: "onlyoffice",
       "charset"				: "utf8",
-	  "max_allowed_packet"	: 1048575
+      "max_allowed_packet"	: 1048575
+    },
+    "sql": {
+      "type"				: "postgres",
+      "tableChanges"		: "doc_changes",
+      "tableCallbacks"		: "doc_callbacks",
+      "tableResult"			: "tast_result",
+      "tablePucker"			: "doc_pucker",
+      "host"				: "localhost",
+      "dbport"				: 5432,
+      "database"			: "onlyoffice",
+      "user"				: "onlyoffice",
+      "pass"				: "onlyoffice",
+      "charset"				: "utf8",
+      "max_allowed_packet"	: 1048575
     }
 }
