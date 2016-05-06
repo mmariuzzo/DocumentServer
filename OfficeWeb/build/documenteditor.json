@@ -1,7 +1,7 @@
 {
     "name": "documenteditor",
     "version": "3.0.0",
-    "build": 959,
+    "build": 965,
     "homepage": "http://www.onlyoffice.com",
     "private": true,
     "sdk": {
@@ -22,7 +22,6 @@
                         ],
                         "dest": "../deploy/sdk/Common/"
                     },
-                    
                     {
                         "src": "../sdk/Word/sdk-all.js",
                         "dest": "../deploy/sdk/Word/sdk-all.js"
