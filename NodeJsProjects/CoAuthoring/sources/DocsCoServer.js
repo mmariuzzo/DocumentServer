@@ -272,6 +272,8 @@ function sendServerRequest(server, postData, onReplyCallback) {
     if (!server.host || !server.path) {
         return;
     }
+    // SMC
+    logger.debug("sendServerRqeust host=%s path=%s", server.host, server.path);
     var options = {
         host: server.host,
         path: server.path,

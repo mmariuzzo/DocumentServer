@@ -1,0 +1,13 @@
+
+DocService/Bin/
+DocService/ConnectionStrings.config
+DocService/Settings.config
+DocService/obj/
+OfficeWeb/build/node_modules/
+OfficeWeb/deploy/
+OfficeWeb/sdk/Excel/sdk-all.js
+OfficeWeb/sdk/PowerPoint/sdk-all.js
+OfficeWeb/sdk/Word/sdk-all.js
+OfficeWeb/sdk/build/opensource/node_modules/
+deploy/
+

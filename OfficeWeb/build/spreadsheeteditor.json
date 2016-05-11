@@ -1,7 +1,7 @@
 {
     "name": "spreadsheeteditor",
     "version": "3.0.0",
-    "build": 857,
+    "build": 863,
     "homepage": "http://www.onlyoffice.com",
     "private": true,
     "sdk": {
@@ -35,7 +35,6 @@
                         "src": "*.cur",
                         "dest": "../deploy/sdk/Word/Images/"
                     },
-                    
                     {
                         "src": "../sdk/Excel/sdk-all.js",
                         "dest": "../deploy/sdk/Excel/sdk-all.js"
