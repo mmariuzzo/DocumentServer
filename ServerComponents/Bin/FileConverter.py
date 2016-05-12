@@ -55,6 +55,7 @@ AVS_OFFICESTUDIO_FILE_DOCUMENT_DOCX = "65"
 AVS_OFFICESTUDIO_FILE_PRESENTATION_PPTX = "129"
 AVS_OFFICESTUDIO_FILE_PRESENTATION_PPSX = "132"
 AVS_OFFICESTUDIO_FILE_SPREADSHEET_XLSX = "257"
+AVS_OFFICESTUDIO_FILE_SPREADSHEET_CSV = "260"
 AVS_OFFICESTUDIO_FILE_CROSSPLATFORM_PDF = "513"
 AVS_OFFICESTUDIO_FILE_TEAMLAB_DOCY = "4097"
 AVS_OFFICESTUDIO_FILE_TEAMLAB_XLSY = "4098"
@@ -195,6 +196,7 @@ def readXml(pathToXml):
     for child in root:
         oTaskQueueDataConvert[child.tag] = child.text
     alert("Reading xml complete")
+    alert(oTaskQueueDataConvert)
     return (oTaskQueueDataConvert, tree)
 
 def writeXml(pathToXml, postfix, tree, sFileFrom, sFormatFrom, sFileTo, sFormatTo):
@@ -371,6 +373,18 @@ def convertASC(paramXml):
     alert("convert with x2t return:{}".format(returnCode))
     return returnCode
 
+def GetCsvDelimiter(csvDelimiter):
+    if csvDelimiter == "2":
+       return "59"
+    elif csvDelimiter == "3":
+       return "58"
+    elif csvDelimiter == "4":
+       return "9"
+    elif csvDelimiter == "5":
+       return "32"
+    else:
+       return "44"
+
 #---Begin---
 if __name__ == "__main__":
     from sys import argv, exit
@@ -410,6 +424,22 @@ if __name__ == "__main__":
     bFromT = fromT is not None
     toT = InternalFormatsCode.get(outputFormatCode)
     bToT = toT is not None
+
+    alert("inputFormatCode " + inputFormatCode)
+    alert("outputFormatCode " + outputFormatCode)
+    alert("fromT {}".format(fromT))
+    alert("toT {}".format(toT))
+
+    if AVS_OFFICESTUDIO_FILE_SPREADSHEET_CSV == inputFormatCode:
+        csvDelimiter = GetCsvDelimiter(oTaskQueueDataConvert.get("m_nCsvDelimiter"))
+        #csvEncoding = oTaskQueueDataConvert.get("m_nCsvTxtEncoding")
+        #alert("cvsDelimiter " + csvDelimiter + " :final " + finalDelimiter)
+        importFilterMap["csv"]["FilterOptions"] = "{},34,0".format(csvDelimiter)
+        #alert(importFilterMap)
+
+    if AVS_OFFICESTUDIO_FILE_SPREADSHEET_CSV == outputFormatCode:
+        csvDelimiter = GetCsvDelimiter(oTaskQueueDataConvert.get("m_nCsvDelimiter"))
+        exportFilterMap["csv"]["com.sun.star.sheet.SpreadsheetDocument"]["FilterOptions"] = "{},34,0".format(csvDelimiter)
 
     if inputFormatCode == outputFormatCode :
         alert("from equal to")
