@@ -2319,9 +2319,11 @@ public class CanvasService : IHttpAsyncHandler
             g_cAscCoAuthoringUrl = ConfigurationSettings.AppSettings["editor.settings.coauthoring.url"] ?? "";
             g_cAscSpellCheckUrl = ConfigurationSettings.AppSettings["editor.settings.spellchecker.url"] ?? "";
 			
-			isAnalyticsEnable = bool.Parse(ConfigurationSettings.AppSettings["editor.settings.analytics.enable"] ?? "false");
+            isAnalyticsEnable = bool.Parse(ConfigurationSettings.AppSettings["editor.settings.analytics.enable"] ?? "false");
 
             TrackingInterval = int.Parse(ConfigurationSettings.AppSettings["license.activeconnections.tracking.interval"] ?? "300");
+
+            canBranding = bool.Parse(ConfigurationSettings.AppSettings["editor.settings.can.branding"] ?? "false");
         }
 
         public OutputSettingsData(string sFormat)
