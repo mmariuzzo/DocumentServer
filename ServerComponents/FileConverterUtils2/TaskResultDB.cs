@@ -514,6 +514,7 @@ namespace FileConverterUtils2
                 using (IDbConnection sqlCon = GetDbConnection())
                 {
                     sqlCon.Open();
+                    _log.DebugFormat("in GetOrCreate {0}", sqlCon.State);
                     if (Constants.mc_sPostgreProvider == Utils.GetDbConnectionProviderName(m_sConnectionString))
                     {
                         using (IDbCommand oAddCommand = sqlCon.CreateCommand())
@@ -614,6 +615,8 @@ namespace FileConverterUtils2
                 m_oGetOrCreate.m_oSqlCon = GetDbConnection();
                 m_oGetOrCreate.m_oSqlCon.Open();
 
+                _log.DebugFormat("in GetOrCreateBegin {0}", m_oGetOrCreate.m_oSqlCon.State);
+
                 if (Constants.mc_sPostgreProvider == Utils.GetDbConnectionProviderName(m_sConnectionString))
                 {
                     IDbCommand oInsCommand = m_oGetOrCreate.m_oSqlCon.CreateCommand();
@@ -632,8 +635,9 @@ namespace FileConverterUtils2
                     m_oGetOrCreate.m_delegateNonQuery.BeginInvoke(GetOrCreateCallback2, null);
                 }
             }
-            catch
+            catch(Exception e)
             {
+                _log.Error("Exception catch in GetOrCreateBegin:", e);
                 m_oGetOrCreate.DisposeAndCallback();
             }
         }
@@ -647,6 +651,8 @@ namespace FileConverterUtils2
                 {
                     if (null != m_oGetOrCreate.m_delegateReader)
                     {
+                        _log.DebugFormat("in GetOrCreateEnd {0}", m_oGetOrCreate.m_oSqlCon.State);
+
                         using (IDataReader oReader = m_oGetOrCreate.m_delegateReader.EndInvoke(ar))
                         {
                             if (true == oReader.Read())
@@ -730,6 +736,15 @@ namespace FileConverterUtils2
                         m_oGetOrCreate.m_oCommand.Dispose();
                         m_oGetOrCreate.m_oCommand = null;
                     }
+                    _log.DebugFormat("in GetOrCreateCallback {0}", m_oGetOrCreate.m_oSqlCon.State);
+
+                    // SMC: Ensure DBConnection is opened
+                    if (ConnectionState.Closed == m_oGetOrCreate.m_oSqlCon.State)
+                    {
+                        m_oGetOrCreate.m_oSqlCon = GetDbConnection();
+                        m_oGetOrCreate.m_oSqlCon.Open();
+                        _log.InfoFormat("in GetOrCreateCallback 2 {0}", m_oGetOrCreate.m_oSqlCon.State);
+                    }
                     IDbCommand oSelCommand = m_oGetOrCreate.m_oSqlCon.CreateCommand();
                     TaskResultDataToUpdate oToUpdate = new TaskResultDataToUpdate();
                     oToUpdate.oLastOpenDate = DateTime.UtcNow;
@@ -740,6 +755,8 @@ namespace FileConverterUtils2
                 }
                 else
                 {
+                    _log.DebugFormat("in GetOrCreateCallback 3 {0}", m_oGetOrCreate.m_oSqlCon.State);
+
                     m_oGetOrCreate.m_bCreate = true;
                     m_oGetOrCreate.m_delegateReader = null;
                     m_oGetOrCreate.FireCallback();
@@ -776,6 +793,7 @@ namespace FileConverterUtils2
                 }
                 if (bExist)
                 {
+                    _log.DebugFormat("in GetOrCreateCallback2 {0}", m_oGetOrCreate.m_oSqlCon.State);
                     IDbCommand oSelCommand = m_oGetOrCreate.m_oSqlCon.CreateCommand();
                     oSelCommand.CommandText = GetSELECTString(m_oGetOrCreate.m_oTast.sKey);
                     m_oGetOrCreate.m_oCommand = oSelCommand;
